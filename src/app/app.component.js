@@ -1,5 +1,8 @@
 import template from './app.html';
+import appController from './app.controller';
 
 export default {
-  template: template
+  template: template,
+  controller: appController,
+  controllerAs: 'appCtrl',
 };

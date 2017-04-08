@@ -1,1 +1,11 @@
-My App
+<p>
+	{{ appCtrl.welcomeMessage }}
+</p>
+<div id="map"></div>
+<div id="right-panel">
+</div>
+
+<script async defer
+	src='https://maps.googleapis.com/maps/api/js?key={{ appCtrl.gmapsKey}}&callback=initMap'>
+</script>
+
