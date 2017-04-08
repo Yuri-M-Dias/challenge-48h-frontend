@@ -8,6 +8,7 @@ import ngMaterial from 'angular-material';
 import uiRouter from 'angular-ui-router';
 import 'lodash';
 import 'restangular';
+import ngMap from 'ngmap';
 
 import '../styles/main.less';
 import 'angular-material/angular-material.css';
@@ -25,7 +26,8 @@ export default angular.module('challenge-48h-frontend', [
   ngSanitize,
   ngMaterial,
   'restangular',
-  uiRouter
+  uiRouter,
+  ngMap
 ])
 .config(appConfig)
 .config(appRoute)

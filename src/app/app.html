@@ -1,11 +1,9 @@
 <p>
-	{{ appCtrl.welcomeMessage }}
+  {{ appCtrl.welcomeMessage }}
 </p>
-<div id="map"></div>
+<div id="map" map-lazy-load="{{appCtrl.gmapsSrc}}"
+  map-lazy-load-params="{{appCtrl.gmapsSrc}}">
+  <ng-map center="41,-87" zoom="3"></ng-map>
+</div>
 <div id="right-panel">
 </div>
-
-<script async defer
-	src='https://maps.googleapis.com/maps/api/js?key={{ appCtrl.gmapsKey}}&callback=initMap'>
-</script>
-
