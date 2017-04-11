@@ -7,14 +7,14 @@
 
     <base href="/" />
   </head>
-  <body>
-    <md-content ng-cloak class="md-padding">
+  <body layout="column" ng-cloak>
+    <md-content class="md-padding">
       <md-nav-bar>
         <md-nav-item name="page1">
           Challenge-48h
         </md-nav-item>
       </md-nav-bar>
-      <ui-view></ui-view>
     </md-content>
+    <ui-view flex></ui-view>
   </body>
 </html>

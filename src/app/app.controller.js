@@ -13,11 +13,24 @@ var appCtrl = /*@ngInject*/ function($log, CONFIG, NgMap, uuid, Drivers, Waypoin
   Waypoints.get().then((data) => vm.waypoints = data, logAngularError);
   Tours.get().then((data) => vm.tours = data, logAngularError);
 
-  const updateCurrentMarkerInfo = (currentId) => {
-    vm.currentMarker = vm.waypoints.find((elem) => elem.id === currentId);
+  const noop = () => {};
+  // Actual implementation with restangular
+  vm.addWaypoint = () => {
+    //vm.waypoints.splice(vm.waypoints.indexOf(waypoint), 1);
+  };
+  vm.deleteWaypoint = (waypoint) => {
+    vm.waypoints.splice(vm.waypoints.indexOf(waypoint), 1);
+  };
+  vm.removeWaypointFromTour = noop;
+  vm.addDriverToTour = noop;
+  vm.deleteTour = (tour) => {
+    vm.tours.splice(vm.tours.indexOf(waypoint), 1);
   };
 
   vm.placeMarker = function(e) {
+    if(!vm.adding) {
+
+    }
     const clickedLocation = e.latLng;
     let markerNewId = uuid.v4();
     let myMarker = {
@@ -32,12 +45,13 @@ var appCtrl = /*@ngInject*/ function($log, CONFIG, NgMap, uuid, Drivers, Waypoin
 
   vm.clickMarker = function(e) {
     console.log(['marker', this, e]);
-    //updateCurrentMarkerInfo(this.id);
+    updateCurrentMarkerInfo(this.id);
   };
 
-  vm.dragEnd = function(e) {
-    console.log(['marker', this, e]);
-    updateCurrentMarkerInfo(this.id);
+  vm.dragEnd = function(e, waypoint) {
+    updateCurrentMarkerInfo(waypoint.id);
+    const location = e.latLng;
+    waypoint.position = [location.lat(), location.lng()];
   };
 
 }

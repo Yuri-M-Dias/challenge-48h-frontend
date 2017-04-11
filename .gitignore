@@ -1,2 +1,4 @@
 node_modules/
 src/config/config.dev.json
+dist/
+dist-docs/

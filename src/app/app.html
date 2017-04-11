@@ -1,27 +1,98 @@
-<div layout="row" ng-cloak>
+<div layout="row" flex ng-cloak>
 
-  <!-- I know, these should have their own controllers...-->
-  <div id="left-panel" layout="column" flex="40">
+  <div id="left-panel" layout-column layout="column" flex="40">
     <md-content>
       <md-tabs md-dynamic-height md-border-bottom>
+
         <md-tab label="waypoints">
-          <md-content class="md-padding">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-          </md-content>
-        </md-tab>
-        <md-tab label="tours">
-          <md-content class="md-padding">
-            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-          </md-content>
-        </md-tab>
-        <md-tab label="drivers">
-          <md-content class="md-padding">
-            <div ng-repeat="driver in appCtrl.drivers" layout="column" flex>
+          <md-content layout-padding>
+            <div layout="row">
+              <md-button class="md-raised md-warn"
+                ng-click="appCtrl.addWaypoint()">
+                New
+              </md-button>
+            </div>
+            <div ng-repeat="waypoint in appCtrl.waypoints" layout="column">
               <md-card>
                 <md-card-content>
                   <div layout="row">
-                    <div flex="20" class="mock-image"></div>
-                    <div layout="column" flex="80">
+                    <div flex="15" flex-offset="5" class="mock-image"></div>
+                    <div layout="column" flex>
+                      <div layout="row">
+                        <span>{{waypoint.name}}</span>
+                      </div>
+                      <div layout="row">
+                        <p>{{waypoint.visible}}</p>
+                      </div>
+                      <div layout="row">
+                        <
+                        <p>{{waypoint.position}}</p>
+                      </div>
+                      <div layout="row">
+                        <md-button class="md-raised md-warn"
+                          ng-click="appCtrl.deleteWaypoint(waypoint)">
+                          Delete
+                        </md-button>
+                      </div>
+                    </div>
+                  </div>
+                </md-card-content>
+              </md-card>
+            </div>
+          </md-content>
+        </md-tab>
+
+        <md-tab label="tours">
+          <md-content layout-padding>
+            <div ng-repeat="tour in appCtrl.tours" layout="column">
+              <md-card>
+                <md-card-content>
+                  <div layout="row">
+                    <div flex="15" class="mock-image"></div>
+                    <div layout="column" flex-offset="5" flex>
+                      <div layout="row" flex>
+                        <p>{{tour.start}}</p>
+                      </div>
+                      <div layout="column" flex>
+                        <div ng-repeat="waypoint in tour.waypoints" layout="row">
+                          <div flex>
+                            <p>{{waypoint}}</p>
+                          </div>
+                          <div flex>
+                            <md-button class="md-raised md-warn"
+                              ng-click="appCtrl.removeWaypointFromTour(waypoint, tour)">
+                              Remove
+                            </md-button>
+                          </div>
+                        </div>
+                      </div>
+                      <div layout="row" flex>
+                        <p>{{tour.destination}}</p>
+                      </div>
+                      <div layout="row" flex>
+                        <md-button class="md-raised" ng-click="appCtrl.addDriverToTour(tour)">
+                          Dispatch Driver
+                        </md-button>
+                        <md-button class="md-raised md-warn" ng-click="appCtrl.deleteTour(tour)">
+                          Delete
+                        </md-button>
+                      </div>
+                    </div>
+                  </div>
+                </md-card-content>
+              </md-card>
+            </div>
+          </md-content>
+        </md-tab>
+
+        <md-tab label="drivers">
+          <md-content layout-padding>
+            <div ng-repeat="driver in appCtrl.drivers" layout="column">
+              <md-card>
+                <md-card-content>
+                  <div layout="row">
+                    <div flex="15" flex-offset="5" class="mock-image"></div>
+                    <div layout="column" flex>
                       <div layout="row">
                         <span>{{driver.name}}</span>
                       </div>
@@ -35,12 +106,14 @@
             </div>
           </md-content>
         </md-tab>
+
       </md-tabs>
     </md-content>
   </div>
 
   <div id="map"
     layout="column"
+    layout-column
     flex
     map-lazy-load="{{appCtrl.gmapsSrc}}"
     map-lazy-load-params="{{appCtrl.gmapsSrc}}"
@@ -52,18 +125,12 @@
         ng-repeat="waypoint in appCtrl.waypoints"
         id="waypoint-{{waypoint.id}}"
         position="{{waypoint.position}}"
-        on-dragend="appCtrl.dragEnd()"
+        on-dragend="appCtrl.dragEnd(waypoint)"
         draggable="true"
         on-click="appCtrl.clickMarker()"
         visible="{{waypoint.visible}}"
         ></marker>
     </ng-map>
   </div>
-</div>
 
-<div id="info-panel" layout="row">
-  <pre>
-    {{ appCtrl.markers | json }}
-  </pre>
 </div>
-
