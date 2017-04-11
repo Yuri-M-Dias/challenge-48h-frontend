@@ -9,6 +9,7 @@ import uiRouter from 'angular-ui-router';
 import 'lodash';
 import 'restangular';
 import ngMap from 'ngmap';
+import 'angular-uuid';
 
 import '../styles/main.less';
 import 'angular-material/angular-material.css';
@@ -19,6 +20,10 @@ import appConfig from './app.config';
 import appRoute from './app.route';
 import appComponent from './app.component';
 
+import './drivers/drivers';
+import './tours/tours';
+import './waypoints/waypoints';
+
 export default angular.module('challenge-48h-frontend', [
   ngAnimate,
   ngAria,
@@ -27,11 +32,15 @@ export default angular.module('challenge-48h-frontend', [
   ngMaterial,
   'restangular',
   uiRouter,
-  ngMap
+  ngMap,
+  'angular-uuid',
+  'drivers',
+  'tours',
+  'waypoints',
 ])
-.config(appConfig)
-.config(appRoute)
-.constant('CONFIG', config)
-.constant('ENVIRONNEMENT', process.env.ENV_NAME)
-.component('app', appComponent)
-.name;
+  .config(appConfig)
+  .config(appRoute)
+  .constant('CONFIG', config)
+  .constant('ENVIRONNEMENT', process.env.ENV_NAME)
+  .component('app', appComponent)
+  .name;

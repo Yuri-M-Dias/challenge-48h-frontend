@@ -1,9 +1,69 @@
-<p>
-  {{ appCtrl.welcomeMessage }}
-</p>
-<div id="map" map-lazy-load="{{appCtrl.gmapsSrc}}"
-  map-lazy-load-params="{{appCtrl.gmapsSrc}}">
-  <ng-map center="41,-87" zoom="3"></ng-map>
+<div layout="row" ng-cloak>
+
+  <!-- I know, these should have their own controllers...-->
+  <div id="left-panel" layout="column" flex="40">
+    <md-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="waypoints">
+          <md-content class="md-padding">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+          </md-content>
+        </md-tab>
+        <md-tab label="tours">
+          <md-content class="md-padding">
+            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+          </md-content>
+        </md-tab>
+        <md-tab label="drivers">
+          <md-content class="md-padding">
+            <div ng-repeat="driver in appCtrl.drivers" layout="column" flex>
+              <md-card>
+                <md-card-content>
+                  <div layout="row">
+                    <div flex="20" class="mock-image"></div>
+                    <div layout="column" flex="80">
+                      <div layout="row">
+                        <span>{{driver.name}}</span>
+                      </div>
+                      <div layout="row">
+                        <p>{{driver.price}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </md-card-content>
+              </md-card>
+            </div>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </div>
+
+  <div id="map"
+    layout="column"
+    flex
+    map-lazy-load="{{appCtrl.gmapsSrc}}"
+    map-lazy-load-params="{{appCtrl.gmapsSrc}}"
+    center="{{appCtrl.mapCenter}}"
+    zoom="{{appCtrl.mapZoom}}"
+    >
+    <ng-map center="41,-87" zoom="3" on-click="appCtrl.placeMarker()">
+      <marker
+        ng-repeat="waypoint in appCtrl.waypoints"
+        id="waypoint-{{waypoint.id}}"
+        position="{{waypoint.position}}"
+        on-dragend="appCtrl.dragEnd()"
+        draggable="true"
+        on-click="appCtrl.clickMarker()"
+        visible="{{waypoint.visible}}"
+        ></marker>
+    </ng-map>
+  </div>
 </div>
-<div id="right-panel">
+
+<div id="info-panel" layout="row">
+  <pre>
+    {{ appCtrl.markers | json }}
+  </pre>
 </div>
+
